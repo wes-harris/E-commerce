@@ -1,5 +1,4 @@
 import { AppBar, Switch, Toolbar, Typography } from '@mui/material';
-import { dark } from '@mui/material/styles/createPalette';
 
 interface Props {
   darkMode: boolean;
