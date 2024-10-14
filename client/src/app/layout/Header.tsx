@@ -1,9 +1,8 @@
 import { AppBar, Toolbar, Typography } from '@mui/material';
-import App from './App';
 
 export default function Header() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ mb: 4 }}>
       <Toolbar>
         <Typography variant="h6">RE-STORE</Typography>
       </Toolbar>
