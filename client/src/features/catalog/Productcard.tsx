@@ -32,7 +32,7 @@ export default function ProductCard({ product }: Props) {
         sx={{
           height: 140,
           backgroundSize: 'contain',
-          bgcolor: 'primary.light',
+          bgcolor: 'primary.dark',
         }}
         image={product.pictureUrl}
         title={product.name}
