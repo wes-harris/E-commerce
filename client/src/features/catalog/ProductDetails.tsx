@@ -21,11 +21,12 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    id &&
+    if (id) {
       agent.Catalog.details(parseInt(id))
         .then((response) => setProduct(response))
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
+    }
   }, [id]);
 
   if (loading) return <LoadingComponent message="Loading product..." />;
