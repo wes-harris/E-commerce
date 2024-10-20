@@ -6,6 +6,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -14,20 +15,25 @@ import { Product } from '../../app/models/product';
 import agent from '../../app/api/agent';
 import NotFound from '../../app/errors/NotFound';
 import LoadingComponent from '../../app/layout/LoadingComponent';
+import { useStoreContext } from '../../app/Context/StoreContext';
+import { LoadingButton } from '@mui/lab';
 
 export default function ProductDetails() {
+  const { basket } = useStoreContext();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
+  const item = basket?.items.find((i) => i.productId === product?.id);
 
   useEffect(() => {
-    if (id) {
-      agent.Catalog.details(parseInt(id))
-        .then((response) => setProduct(response))
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-    }
-  }, [id]);
+    if (item) setQuantity(item.quantity);
+    agent.Catalog.details(parseInt(id))
+      .then((response) => setProduct(response))
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
+  }, [id, item]);
 
   if (loading) return <LoadingComponent message="Loading product..." />;
 
@@ -70,6 +76,28 @@ export default function ProductDetails() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Grid2 container spacing={2}>
+          <Grid2 size={4}>
+            <TextField
+              variant="outlined"
+              type="number"
+              label="Quantity in Cart"
+              fullWidth
+              value={quantity}
+            />
+          </Grid2>
+          <Grid2 size={6}>
+            <LoadingButton
+              sx={{ height: '55px' }}
+              color="primary"
+              size="large"
+              variant="contained"
+              fullWidth
+            >
+              {item ? 'Update Quantity' : 'Add to Cart'}
+            </LoadingButton>
+          </Grid2>
+        </Grid2>
       </Grid2>
     </Grid2>
   );
