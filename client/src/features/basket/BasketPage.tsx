@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Grid2,
   Paper,
   Table,
@@ -18,6 +19,7 @@ import { useState } from 'react';
 import agent from '../../app/api/agent';
 import { LoadingButton } from '@mui/lab';
 import BasketSummary from './BasketSummary';
+import { Link } from 'react-router-dom';
 
 export default function BasketPage() {
   const { basket, setBasket, removeItem } = useStoreContext();
@@ -133,8 +135,17 @@ export default function BasketPage() {
       </TableContainer>
       <Grid2 container>
         <Grid2 offset={6} />
-        <Grid2 offset={8.25}>
+        <Grid2 offset={8}>
           <BasketSummary />
+          <Button
+            component={Link}
+            to="/checkout"
+            variant="contained"
+            size="large"
+            fullWidth
+          >
+            Checkout
+          </Button>
         </Grid2>
       </Grid2>
     </>
